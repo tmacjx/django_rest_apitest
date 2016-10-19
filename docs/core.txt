@@ -1,0 +1,2 @@
+django_rest_apitest
+用于测试django rest framework
