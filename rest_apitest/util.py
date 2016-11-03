@@ -240,7 +240,7 @@ class UserBasicFactory(factory.DjangoModelFactory):
 
 
 # 模拟admin
-class UserAdminFactory(UserBasicFactory):
+class AdminFactory(UserBasicFactory):
     is_superuser = True
     is_staff = True
 

@@ -30,7 +30,7 @@ Quick start
 5. Which we supply::
 
   from rest_apitest.main import SchemaTestCase
-  from rest_apitest.util import UserBasicFactory, UserAdminFactory, UserFactory
+  from rest_apitest.util import UserBasicFactory, AdminFactory, UserFactory
 
 
 6. More detail, please see test_project
