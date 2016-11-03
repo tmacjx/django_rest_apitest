@@ -188,7 +188,7 @@ class APITestCaseWithAssertions(APITestCase):
 
 
 # 模拟user 适用oauth
-class UserFactory(factory.DjangoModelFactory):
+class UserOAuthFactory(factory.DjangoModelFactory):
     class Meta:
         model = User
 
@@ -197,7 +197,7 @@ class UserFactory(factory.DjangoModelFactory):
 
     @classmethod
     def _create(cls, model_class, *args, **kwargs):
-        user = super(UserFactory, cls)._create(model_class, *args, **kwargs)
+        user = super(UserOAuthFactory, cls)._create(model_class, *args, **kwargs)
         # Force save for post_save signal to create auth client
         user.save()
         oauth_toolkit_version = get_package_version(oauth2_provider)

@@ -40,7 +40,8 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'oauth2_provider',
     'rest_framework',
-    'rest_apitest'
+    'rest_apitest',
+    'test_project.test_app'
 ]
 
 MIDDLEWARE_CLASSES = [

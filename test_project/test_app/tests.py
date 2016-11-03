@@ -4,8 +4,8 @@ from django.test import TestCase
 # Create your tests here.
 from django.contrib.auth import get_user_model
 from django.core.urlresolvers import reverse
-# from core.util import UserBasicFactory
-from django_rest_apitest import UserBasicFactory, SchemaTestCase
+from rest_apitest.main import SchemaTestCase
+from rest_apitest.util import UserBasicFactory
 User = get_user_model()
 
 # session认证情况下
@@ -16,11 +16,17 @@ User = get_user_model()
 class UserTests(SchemaTestCase):
     def setUp(self):
         # 指定测试采用的认证方式
-        # basic_credential  基于basic
-        # session_credentia 基于session
-        # oauth_credential  基于oauth2 token
-        auth_type = 'basic_credential'
-        super(UserTests, self).setUp(AUTH_TYPE=auth_type)
+        # basic_credential   >> basic
+        # session_credential  >> session
+        # oauth_credential   >> oauth2 token
+
+        # 默认为basic_credential
+        super(UserTests, self).setUp()
+
+        # 其他需要以关键字传入
+        # auth_type = session_credential
+        # super(UserTests, self).setUp(auth_type=session_credential)
+
         self.user = UserBasicFactory()
 
     def test_info(self):

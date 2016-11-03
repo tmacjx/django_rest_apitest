@@ -16,8 +16,6 @@
   ],
 
   "objects": {
-    "$infoRequest": {
-    },
     "$infoResponse": {
       "username": "string",
       "email": "string"
