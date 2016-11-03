@@ -1,0 +1,4 @@
+Django==1.9
+djangorestframework==3.4.7
+django-oauth-toolkit
+factory-boy==2.4.1

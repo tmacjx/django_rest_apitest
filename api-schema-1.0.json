@@ -1,0 +1,581 @@
+{
+    "urls": [
+        {
+            "url": "sign_up/",
+            "doc": "Creates a new user and returns client_id and client_secret",
+            "post": {
+                "#meta": "",
+                "doc": "Expects a base64 encoded password",
+                "request": "$signUpRequest",
+                "response": {
+                    "200+": "$signUpResponse"
+                }
+            }
+        },
+        {
+            "url": "login/",
+            "doc": "Authenticates an existing user and returns client_id and client_secret",
+            "get": {
+                "#meta": "basicauth",
+                "response": {
+                    "200+": "$loginResponse"
+                }
+            }
+        },
+        {
+            "url": "sign_in/",
+            "doc": "Authenticates an existing user and returns client_id and client_secret. Like 'login' but doesn't require basic auth",
+            "post": {
+                "#meta": "",
+                "request": "$signInRequest",
+                "response": {
+                    "200+": "$loginResponse"
+                }
+            }
+        },
+        {
+            "url": "o/token/",
+            "doc": "Provides access token for authenticated calls throughout the app",
+            "post": {
+                "#meta": "",
+                "doc": "Request object must be passed with Content-Type application/x-www-form-urlencoded. grant_type should be set to 'client_credentials'",
+                "request": "$tokenRequest",
+                "response": {
+                    "200+": "$tokenResponse"
+                }
+            }
+        },
+        {
+            "url": "social_sign_up/",
+            "doc": "Creates a new user from a social account, or associates an existing user with a social account",
+            "post": {
+                "#meta": "oauth2,optional",
+                "doc": "Provider will be either 'facebook' or 'twitter'. If twitter, access_token_secret must also be provided",
+                "request": "$socialSignUpRequest",
+                "response": {
+                    "200+": "$signUpResponse"
+                }
+            }
+        },
+        {
+            "url": "pushwoosh_token/",
+            "doc": "Register a pushwoosh token with the server for push notifications",
+            "post": {
+                "#meta": "oauth2",
+                "doc": "Expects just a token received from the client device registering with Pushwoosh",
+                "request": "$pushwooshTokenRequest",
+                "response": {
+                    "200+": "$pushwooshTokenResponse"
+                }
+            }
+        },
+        {
+            "url": "posts/",
+            "get": {
+                "#meta" : "oauth2,optional",
+                "doc": "Gets a list of all posts",
+                "response": {
+                    "200+": "$postResponse"
+                }
+            },
+            "post": {
+                "#meta": "oauth2",
+                "doc": "Create a post",
+                "request": "$postRequest",
+                "response": {
+                    "200+": "$postResponse"
+                }
+            }
+        },
+        {
+            "url": "posts/:id/",
+            "get": {
+                "#meta" : "oauth2,optional",
+                "doc": "Gets a single post",
+                "response": {
+                    "200+": "$postResponse"
+                }
+            },
+            "patch": {
+                "#meta": "oauth2",
+                "doc": "Update a post",
+                "request": "$postRequest",
+                "response": {
+                    "200+": "$postResponse"
+                }
+            },
+            "delete": {
+                "#meta": "oauth2"
+            }
+        },
+        {
+            "url": "posts/:id/social_share/",
+            "post": {
+                "#meta": "oauth2",
+                "doc": "Share a post to a third party social provider. Only request param is 'provider', which should be 'facebook' or 'twitter' or whatever. Should return the string 'success'",
+                "request": "$socialShareRequest",
+                "response": {
+                    "200+": "$socialShareResponse"
+                }
+            }
+        },
+        {
+            "url": "follows/",
+            "post": {
+                "#meta": "oauth2",
+                "doc": "Creates a user follow. The authenticated user will be the follower, and the user specified in the $followRequest will be the one followed",
+                "request": "$followRequest",
+                "response": {
+                    "200+": "$followResponse"
+                }
+            }
+        },
+        {
+            "url": "follows/bulk_create/",
+            "post": {
+                "#meta": "oauth2",
+                "doc": "Creates multiple follow objects simultaneously",
+                "request": "$followRequest",
+                "response": {
+                    "200+": "$followResponse"
+                }
+            }
+        },
+        {
+            "url": "follows/:id/",
+            "delete": {
+                "#meta": "oauth2",
+            "doc": "Deletes a user follow. Must pass the id of the follow object being deleted, not the user being un-followed",
+                "prototype": "$followResponse"
+            }
+        },
+        {
+            "url": "flag/",
+            "post": {
+                "#meta": "oauth2",
+                "doc": "Allows a user to flag a post",
+                "request": "$flagRequest",
+                "response": {
+                    "200+": "$flagResponse"
+                }
+            }
+        },
+        {
+            "url": "users/:id/following/",
+            "get": {
+                "#meta": "oauth2,optional",
+                "doc": "Returns all users that the specified user is following",
+                "parameters": "",
+                "response": {
+                    "200+": "$followResponse"
+                }
+            }
+        },
+        {
+            "url": "users/:id/followers/",
+            "get": {
+                "#meta": "oauth2,optional",
+                "doc": "Returns all users that are following the user specified with :id",
+                "parameters": "",
+                "response": {
+                    "200+": "$followResponse"
+                }
+            }
+        },
+        {
+            "url": "shares/",
+            "post": {
+                "#meta": "oauth2",
+                "doc": "Shares an object with another user",
+                "request": "$shareRequest",
+                "response": {
+                    "200+": "$shareResponse"
+                }
+            }
+        },
+        {
+            "url": "comments/",
+            "get": {
+                "#meta" : "oauth2,optional",
+                "doc": "Gets a list of all comments",
+                "parameters": "$commentParameters",
+                "response": {
+                    "200+": "$commentResponse"
+                }
+            },
+            "post": {
+                "#meta": "oauth2",
+                "doc": "Post a comment",
+                "request": "$commentRequest",
+                "response": {
+                    "200+": "$commentResponse"
+                }
+            }
+        },
+        {
+            "url": "likes/",
+            "post": {
+                "#meta": "oauth2",
+                "doc": "Like an object",
+                "request": "$likeRequest",
+                "response": {
+                    "200+": "$likeResponse"
+                }
+            }
+        },
+        {
+            "url": "users/",
+            "get": {
+                "#meta": "oauth2,optional",
+                "doc": "Returns a list of all users. Can be searched to use as an autocomplete tool. Search query will search username and full name",
+                "parameters": "$userParameters",
+                "response": {
+                    "200+": "$userResponse"
+                }
+            }
+        },
+        {
+            "url": "users/me/",
+            "get": {
+                "#meta": "oauth2",
+                "doc": "Returns the currently logged in user",
+                "resource_type": "detail",
+                "response": {
+                    "200+": "$userResponse"
+                }
+            }
+        },
+        {
+            "url": "users/:id/",
+            "get": {
+                "#meta": "oauth2,optional",
+                "doc": "Returns a single user's profile",
+                "response": {
+                    "200+": "$userResponse"
+                }
+            }
+        },
+        {
+            "url": "users/:id/",
+            "patch": {
+                "#meta": "oauth2",
+                "doc": "Edit the profile of the logged in user",
+                "prototype": "$userResponse",
+                "request": "$userRequest",
+                "response": {
+                    "200+": "$userResponse"
+                }
+            }
+        },
+        {
+            "url": "password/change/",
+            "patch": {
+                "#meta": "oauth2",
+                "doc": "Change the authenticated user's password",
+                "request": "$changePasswordRequest",
+                "response": {
+                    "200+": "$changePasswordResponse"
+                }
+            }
+        },
+        {
+            "url": "password/reset/",
+            "post": {
+                "#meta": "",
+                "doc": "Sends a password reset email",
+                "request": "$resetPasswordRequest",
+                "response": {
+                    "200+": "$resetPasswordResponse"
+                }
+            }
+        },
+        {
+            "url": "password/new/",
+            "post": {
+                "#meta": "",
+                "doc": "Change a user's password",
+                "request": "$setPasswordRequest",
+                "response": {
+                    "200+": "$userResponse"
+                }
+            }
+        },
+        {
+            "url": "notification_settings/",
+            "get": {
+                "#meta": "oauth2",
+                "doc": "See the notification settings for the logged in user",
+                "response": {
+                    "200+": "$notificationSettingResponse"
+                }
+            },
+            "put": {
+                "#meta": "oauth2",
+                "doc": "Bulk update a user's notification settings",
+                "request": "$notificationSettingBulkRequest",
+                "repsonse": {
+                    "200+": "$notificationSettingResponse"
+                }
+            }
+        },
+        {
+            "url": "notification_settings/:id/",
+            "patch": {
+                "#meta": "oauth2",
+                "doc": "Update the setting for a single notification type. Encompasses push and email notifications",
+                "prototype": "$notificationSettingResponse",
+                "request": "$notificationSettingRequest",
+                "response": {
+                    "200+": "$notificationSettingResponse"
+                }
+            }
+        },
+        {
+            "url": "notifications/",
+            "get": {
+                "#meta": "oauth2",
+                "doc": "See all notifications for the authenticated user",
+                "response": {
+                    "200+": "$notificationResponse"
+                }
+            }
+        },
+        {
+            "url": "social_friends/",
+            "get": {
+                "#meta": "oauth2",
+                "doc": "Get the user's friends from a social network that already use our app. Pass provider=facebook for facebook friends and provider=twitter for people the user follows on twitter",
+                "parameters": "$socialFriendParameters",
+                "response": {
+                    "200+": "$userResponse"
+                }
+            }
+        }
+    ],
+    "objects": {
+        "$signUpRequest": {
+            "fullname": "string",
+            "username": "string",
+            "email": "string,optional",
+            "password": "string"
+        },
+        "$signUpResponse": {
+            "fullname": "string",
+            "username": "string",
+            "email": "string,optional",
+            "client_id": "string",
+            "client_secret": "string"
+        },
+        "$loginResponse": {
+            "client_id": "string",
+            "client_secret": "string"
+        },
+        "$signInRequest": {
+            "username": "string",
+            "password": "string"
+        },
+        "$tokenRequest": {
+            "client_id": "string",
+            "client_secret": "string",
+            "grant_type": "string"
+        },
+        "$tokenResponse": {
+            "access_token": "string",
+            "token_type": "string",
+            "expires_in": "int",
+            "scope": "string"
+        },
+        "$socialSignUpRequest": {
+            "provider": "string",
+            "access_token": "string",
+            "access_token_secret": "string,optional"
+        },
+        "$userParameters": {
+            "search": "string,optional"
+        },
+        "$userResponse": {
+            "email": "string,optional",
+            "id": "int,primarykey",
+            "username": "string",
+            "fullname": "string",
+            "thumbnail": "string",
+            "original_photo": "string",
+            "small_photo": "string",
+            "large_photo": "string",
+            "about": "string",
+            "location": "M2O,$locationResponse,optional",
+            "content_type": "int",
+            "clip": "O2O,$clipResponse,optional",
+            "user_following_count": "int",
+            "user_followers_count": "int",
+            "follow_id": "int,optional"
+        },
+        "$userRequest": {
+            "email": "string,optional",
+            "username": "string,optional",
+            "fullname": "string,optional",
+            "original_photo": "string,optional",
+            "about": "string,optional",
+            "location": "int,optional",
+            "clip": "int,optional"
+        },
+        "$postRequest": {
+            "title": "string,optional",
+            "description": "string,optional",
+            "thumbnail": "image,optional"
+        },
+        "$postResponse": {
+            "id": "int,primarykey",
+            "title": "string,optional",
+            "description": "string,optional",
+            "thumbnail": "string,optional",
+            "content_type": "int",
+            "user": "$userResponse",
+            "liked_id": "int,optional"
+        },
+        "$pushwooshTokenRequest": {
+            "token": "string",
+            "language": "string",
+            "hwid": "string"
+        },
+        "$pushwooshTokenResponse": {
+            "id": "int,primarykey",
+            "created": "datetime",
+            "token": "string",
+            "user": "M2O,$userResponse"
+        },
+        "$commentResponse": {
+            "user": "M2O,$userResponse",
+            "id": "int,primarykey",
+            "created": "datetime",
+            "content_type": "int",
+            "object_id": "int",
+            "description": "string"
+        },
+        "$commentRequest": {
+            "content_type": "int",
+            "object_id": "int",
+            "description": "string"
+        },
+        "$commentParameters": {
+            "content_type": "int,optional",
+            "object_id": "int,optional"
+        },
+        "$followResponse": {
+            "follower": "M2O,$userResponse",
+            "following": "M2O,$userResponse",
+            "id": "int,primarykey",
+            "created": "datetime",
+            "content_type": "int",
+            "object_id": "int"
+        },
+        "$followRequest": {
+            "content_type": "int",
+            "object_id": "int"
+        },
+        "$shareResponse": {
+            "user": "M2O,$userResponse",
+            "id": "int,primarykey",
+            "created": "datetime",
+            "content_type": "int",
+            "object_id": "int",
+            "shared_with": "array,int"
+        },
+        "$shareRequest": {
+            "content_type": "int",
+            "object_id": "int",
+            "shared_with": "array,int"
+        },
+        "$flagResponse": {
+            "user": "M2O,$userResponse",
+            "id": "int,primarykey",
+            "created": "datetime",
+            "content_type": "int",
+            "object_id": "int"
+        },
+        "$flagRequest": {
+            "content_type": "int",
+            "object_id": "int"
+        },
+        "$likeResponse": {
+            "user": "M2O,$userResponse",
+            "id": "int,primarykey",
+            "created": "datetime",
+            "content_type": "int",
+            "object_id": "int"
+        },
+        "$likeRequest": {
+            "content_type": "int",
+            "object_id": "int"
+        },
+        "$tagResponse": {
+            "name": "string",
+            "id": "int,primarykey"
+        },
+        "$notificationTypeResponse": {
+            "id": "int,primarykey",
+            "name": "string",
+            "description": "string",
+            "is_active": "boolean"
+        },
+        "$notificationSettingResponse": {
+            "id": "int,primarykey",
+            "notification_type": "$notificationTypeResponse",
+            "allow_push": "boolean",
+            "allow_email": "boolean"
+        },
+        "$notificationSettingBulkRequest": {
+            "id": "int,primarykey",
+            "allow_push": "boolean,optional",
+            "allow_email": "boolean,optional"
+        },
+        "$notificationSettingRequest": {
+            "allow_push": "boolean",
+            "allow_email": "boolean"
+        },
+        "$articleResponse": {
+            "id": "int,primarykey",
+            "title": "string,optional",
+            "thumbnail": "string,optional",
+            "liked_id": "int,optional",
+            "content_type": "int"
+        },
+        "$notificationResponse": {
+            "created": "datetime",
+            "name": "string",
+            "message": "string",
+            "reporter": "M2O,$userResponse",
+            "post": "$postResponse,optional",
+            "article": "$articleResponse,optional"
+        },
+        "$socialShareRequest": {
+            "provider": "string"
+        },
+        "$socialShareResponse": {
+            "status": "string"
+        },
+        "$socialFriendParameters": {
+            "provider": "string"
+        },
+        "$changePasswordRequest": {
+            "old_password": "string",
+            "password": "string",
+            "confirm_password": "string"
+        },
+        "$changePasswordResponse": {
+            "status": "string"
+        },
+        "$resetPasswordRequest": {
+            "email": "string"
+        },
+        "$resetPasswordResponse": {
+            "status": "string"
+        },
+        "$setPasswordRequest": {
+            "uid": "string",
+            "token": "string",
+            "password": "string",
+            "confirm_password": "string"
+        }
+    }
+}

@@ -1,2 +1,29 @@
 django_rest_apitest
 用于测试django rest framework
+
+
+# APITestCaseWithAssertions 判断response的status是否符合预期
+# SchemaTestCase 用于比较resp返回格式 与 json文件要求的是否一致
+
+在demo中只演示了基于session的模拟测试
+# 如果
+
+
+使用:
+
+
+一.需要在项目的setting文件下，增加配置
+
+API_SCHEMA = 'json文件绝对路径'
+
+
+二.迁移数据库
+
+# 执行python manage.py makemigrations
+# 执行python manage.py migrate
+
+
+
+
+
+
