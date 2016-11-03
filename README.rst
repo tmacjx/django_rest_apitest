@@ -4,8 +4,6 @@ Django_rest_apitest
 
 Djano_rest_apitest aim to simpler api back_end test.
 
-Detailed documentation is in the "docs" directory.
-
 Quick start
 -----------
 
@@ -19,4 +17,5 @@ Quick start
 2.Make sure you have installed 'oauth2_provider', 'rest_framework',
 
 3.How To Use
-3.1 from
+  from rest_apitest.main import SchemaTestCase
+  from rest_apitest.util import UserBasicFactory, UserAdminFactory, UserFactory
