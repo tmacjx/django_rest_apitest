@@ -1,0 +1,12 @@
+MANIFEST.in
+README.rst
+setup.py
+django_rest_apitest.egg-info/PKG-INFO
+django_rest_apitest.egg-info/SOURCES.txt
+django_rest_apitest.egg-info/dependency_links.txt
+django_rest_apitest.egg-info/requires.txt
+django_rest_apitest.egg-info/top_level.txt
+docs/core.txt
+rest_apitest/__init__.py
+rest_apitest/main.py
+rest_apitest/util.py
