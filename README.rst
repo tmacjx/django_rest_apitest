@@ -3,7 +3,9 @@ Django_rest_apitest
 =====
 
 Djano_rest_apitest aim to simpler api back_end test.
+
 You can mock model User with factory-boy
+
 and use basic/session/oauth2 token to credential when test API Endpoint.
 
 Quick start
