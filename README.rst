@@ -24,9 +24,11 @@ Quick start
     ]
 
 3. Manual generate an api-schema.json file used for check request and corresponding response.
+
    The format style of json file refer to api-schema-1.0.json.
 
 4. Add 'API_SCHEMA' to your project's setting file which value is api-schema.json's absolute file path like this::
+
 
    API_SCHEMA = os.path.join(PROJECT_ROOT, 'demo.json')
 
