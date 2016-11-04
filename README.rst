@@ -30,6 +30,7 @@ Quick start
 5. Which we supply::
 
   from rest_apitest.main import SchemaTestCase
+
   from rest_apitest.util import UserBasicFactory, AdminFactory, UserOAuthFactory
 
 
@@ -37,4 +38,4 @@ Quick start
 
 
 
-Refer to: http://github.com/yeti/yak-server.git@master#egg=yak-server
+Refer to: http://github.com/yeti/yak-server.git
